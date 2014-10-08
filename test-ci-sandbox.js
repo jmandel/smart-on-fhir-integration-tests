@@ -54,7 +54,7 @@ describe("SMART on FHIR Stack", function() {
   });
 
   before(wrap(function *() {
-    browser = wd.promiseChainRemote("127.0.0.1", 4445);
+    browser = wd.promiseChainRemote();
     // optional extra logging
     browser.on('status', function(info) {
       timeLog(info.yellow);
@@ -81,7 +81,7 @@ describe("SMART on FHIR Stack", function() {
 
       yield waitForMatch("document.title", "Log In");
 
-      yield browser.saveScreenshot();
+      //yield browser.saveScreenshot();
       //yield browser.title().should.eventually.include('Log In');
 
       yield browser.elementByCss('#j_username').type('demo');
