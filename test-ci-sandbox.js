@@ -79,35 +79,36 @@ describe("SMART on FHIR Stack", function() {
 
     yield browser.get("https://ci.fhir.me");
 
-      yield waitForMatch("document.title", "Log In");
+    yield waitForMatch("document.title", "Log In");
 
-      //yield browser.saveScreenshot();
-      //yield browser.title().should.eventually.include('Log In');
+    //yield browser.saveScreenshot();
+    //yield browser.title().should.eventually.include('Log In');
 
-      yield browser.elementByCss('#j_username').type('demo');
-      yield browser.elementByCss('#j_password').type('demo');
-      yield browser.elementByCss('input.btn').click();
-      yield browser.title().should.eventually.include('FHIR Starter');
+    yield browser.waitForElementByCss('#j_username', visible, 5000)
+    yield browser.elementByCss('#j_username').type('demo');
+    yield browser.elementByCss('#j_password').type('demo');
+    yield browser.elementByCss('input.btn').click();
+    yield browser.title().should.eventually.include('FHIR Starter');
 
-      yield browser // click on the first patient (Daniel Adams)
-      .waitForElementByCss('#patient-results td.name > span', visible, 5000)
-      .click();
+    yield browser // click on the first patient (Daniel Adams)
+    .waitForElementByCss('#patient-results td.name > span', visible, 5000)
+    .click();
 
-      var launch = yield browser
-      .waitForElementByCss('div.caption a', visible, 5000);
+    var launch = yield browser
+    .waitForElementByCss('div.caption a', visible, 5000);
 
-      yield launch.text().should.eventually.include('Cardiac Risk');
-      yield launch.click();
-      
-      yield openLastWindow();
+    yield launch.text().should.eventually.include('Cardiac Risk');
+    yield launch.click();
+    
+    yield openLastWindow();
 
-      timeLog(yield  browser.eval("document.title"));
-      timeLog(yield browser.url());
+    timeLog(yield  browser.eval("document.title"));
+    timeLog(yield browser.url());
 
-      yield waitForMatch("document.title", "Cardiology");
-      yield browser.saveScreenshot();
+    yield waitForMatch("document.title", "Cardiology");
+    yield browser.saveScreenshot();
 
-      timeLog(yield browser.url());
+    timeLog(yield browser.url());
   }));
 
   it("Should return an error on invalid launch context", wrap(function *() {
